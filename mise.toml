@@ -1,0 +1,49 @@
+[tools]
+python = "3.14"
+uv = "latest"
+
+[settings]
+python.uv_venv_auto = true
+
+[env]
+_.python.venv = { path = ".venv", create = false }
+# Git URL of the SDK to clone into $SDK_DIR
+SDK_REPO = "git@github.com:Unleash/unleash-python-sdk.git"
+SDK_DIR = "sdk"
+
+[tasks."sdk:clone"]
+description = "Clone the SDK into $SDK_DIR and add it as an editable dependency"
+run = """
+if [ ! -d "$SDK_DIR" ]; then git clone "$SDK_REPO" "$SDK_DIR"; fi
+uv add --editable "./$SDK_DIR" --extra async
+"""
+
+[tasks."sdk:pull"]
+description = "Pull latest SDK changes"
+run = 'git -C "$SDK_DIR" pull'
+
+[tasks.sync]
+description = "Install dependencies"
+run = "uv sync"
+
+[tasks.lint]
+description = "Lint and check formatting"
+run = ["uv run ruff check .", "uv run ruff format --check ."]
+
+[tasks.fmt]
+description = "Format and autofix"
+run = ["uv run ruff format .", "uv run ruff check --fix ."]
+
+[tasks.test]
+description = "Run tests"
+run = "uv run pytest"
+
+[tasks.run]
+description = "Run a script from scripts/"
+usage = 'arg "<script>" help="Script file name in scripts/"'
+run = 'uv run python "scripts/${usage_script?}"'
+
+[tasks."sdk:test"]
+description = "Run the SDK's test suite in an isolated env (extra args go to pytest)"
+dir = "{{config_root}}/sdk"
+run = "uv run --no-project --with-requirements requirements.txt --with-editable . pytest -o addopts= -n auto"

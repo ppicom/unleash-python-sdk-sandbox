@@ -2,6 +2,11 @@
 
 Sandbox for exercising a Python SDK cloned into `sdk/`.
 
+## Goal
+
+The goal of this project is to exercise the python sdk the same way our users will do. The only difference is that we have installed it as a "live" dependency
+that lives in "/sdk". That way, when the tests find a bug, we can fix it from within this project.
+
 ## Setup
 
 ```sh
@@ -23,6 +28,7 @@ mise run sdk:pull         # update the SDK clone
 
 The SDK is installed in editable mode, so changes in `sdk/` show up in scripts immediately.
 
-## License
+## Directory structure
 
-Licensed under the GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later). See [LICENSE](LICENSE).
+- ./sdk: Where the SDK lives. It's a live clone of the repository of the SDK. If a bug is found, it can be fixed there.
+- ./tests: Where the tests for the SDK live.

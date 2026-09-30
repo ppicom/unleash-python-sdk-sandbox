@@ -1,0 +1,37 @@
+[project]
+name = "python-sdk-sandbox"
+version = "0.1.0"
+description = "Sandbox for exercising a cloned Python SDK"
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=3.14"
+dependencies = [
+    "unleashclient[async]",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv.workspace]
+members = [
+    "sdk",
+]
+
+[tool.uv.sources]
+unleashclient = { workspace = true, editable = true }
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.168.3",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.16.9",
+]
