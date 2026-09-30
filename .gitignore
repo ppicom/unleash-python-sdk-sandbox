@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Environments
+.venv/
+.env
+
+# Tool caches
+.ruff_cache/
+.pytest_cache/
+
+# Cloned SDK
+sdk/
+
+# Local secrets
+mise.local.toml
+
+# Private agents file
+*.local.md
